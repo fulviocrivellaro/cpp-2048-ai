@@ -5,11 +5,25 @@
 
 #include "2048Core.h"
 
+#define AIScore float
+#define HIGHEST_SCORE 1.0f
+
 namespace AiMath2048
 {
 	namespace Query
 	{
 		using namespace Core2048;
+
+		struct AISetup
+		{
+			AIScore isHighestInTheCorner;
+			AIScore isMainColumnOrdered;
+			AIScore isMainColumnHighest;
+			AIScore forcedToUnwantedMove;
+			AIScore availableMoves;
+			AIScore countOrderedRows;
+			AIScore countEmptyTiles;
+		};
 
 		bool isHighestInTheCorner(const TILE grid[][SIZE]);
 		
