@@ -45,6 +45,21 @@ namespace My2048AITests
 			Assert::IsFalse(isMainColumnOrdered(grid));
 		}
 
+		TEST_METHOD(ForcedToUnwantedMoveTest)
+		{
+			TILE grid[SIZE][SIZE] = {{8, 2, 3, 4},
+									 {7, 3, 2, 1},
+									 {6, 2, 3, 2},
+									 {5, 3, 4, 1}};
+			
+			Assert::IsTrue(forcedToUnwantedMove(grid));
+			
+			grid[3][3] = 0;
+			Assert::IsTrue(forcedToUnwantedMove(grid));
+
+			grid[3][0] = 0;
+			Assert::IsFalse(forcedToUnwantedMove(grid));
+		}
 		
 		TEST_METHOD(AvailableMovesTest)
 		{

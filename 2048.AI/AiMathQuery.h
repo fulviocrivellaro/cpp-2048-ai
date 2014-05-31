@@ -17,7 +17,7 @@ namespace AiMath2048
 
 		bool isMainColumnHighest(const TILE grid[][SIZE]);
 
-		bool mustMoveDown(const TILE grid[][SIZE]);
+		bool forcedToUnwantedMove(const TILE grid[][SIZE]);
 
 		unsigned int availableMoves(const TILE grid[][SIZE]);
 

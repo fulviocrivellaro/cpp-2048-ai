@@ -58,10 +58,9 @@ bool AiMath2048::Query::isMainColumnHighest(const TILE grid[][SIZE])
 	return true;
 }
 
-bool AiMath2048::Query::mustMoveDown(const TILE grid[][SIZE])
+bool AiMath2048::Query::forcedToUnwantedMove(const TILE grid[][SIZE])
 {
 	if (CanMove(grid, Direction::Left)) return false;
-	if (CanMove(grid, Direction::Right)) return false;
 	if (CanMove(grid, Direction::Up)) return false;
 	return true;
 }
