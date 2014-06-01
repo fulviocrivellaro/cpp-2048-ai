@@ -36,6 +36,12 @@
     <ClInclude Include="ProductGridScoreCalculator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="INextMoveChooser.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WorstCaseNextMoveChooser.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -48,6 +54,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ProductGridScoreCalculator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="WorstCaseNextMoveChooser.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
