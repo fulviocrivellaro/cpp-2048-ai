@@ -32,30 +32,7 @@ Core2048::Direction WorstCaseNextMoveChooser::getNextMove(const TILE grid[SIZE][
 	ref += restoreInfo.highestAngle;
 	ref = ref % 4;
 
-	bestDirection = (Direction)(((int)bestDirection + (int)(restoreInfo.highestAngle)) % 4);
-
-	// need to decode result
-	if (restoreInfo.transposed)
-	{
-		switch (bestDirection)
-		{
-		case Up:
-			bestDirection = Left;
-			break;
-		case Right:
-			bestDirection = Down;
-			break;
-		case Down:
-			bestDirection = Right;
-			break;
-		case Left:
-		default:
-			bestDirection = Up;
-			break;
-		}
-	}
-
-	return bestDirection;
+	return denormalizeDirection(bestDirection, restoreInfo);
 }
 
 inline void WorstCaseNextMoveChooser::testScoreForDirection(TILE grid[SIZE][SIZE], const Direction direction, AIScore* const bestResult, Direction* const bestDirection) const

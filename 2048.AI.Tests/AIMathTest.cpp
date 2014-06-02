@@ -135,7 +135,7 @@ namespace My2048AITests
 									 {3, 5, 2, 0},
 									 {3, 5, 4, 6}};
 			
-			auto res = normalize(grid);
+			NormalizeInfo res = normalize(grid);
 
 			Assert::AreEqual(Angles::BottomRight, res.highestAngle);
 			Assert::IsTrue(res.transposed);
@@ -159,7 +159,7 @@ namespace My2048AITests
 				}
 			}
 			
-			auto info = normalize(grid);
+			NormalizeInfo info = normalize(grid);
 			denormalize(grid, info);
 
 			MatrixAreEqual(copy, grid, SIZE);
@@ -180,11 +180,117 @@ namespace My2048AITests
 				}
 			}
 			
-			auto info = normalize(grid);
+			NormalizeInfo info = normalize(grid);
 			denormalize(grid, info);
 
 			MatrixAreEqual(copy, grid, SIZE);
 		}
+
+		TEST_METHOD(DeNormalizeDirectionPlainTest)
+		{
+			TILE grid[SIZE][SIZE] = {{5, 0, 0, 0},
+									 {4, 0, 0, 1},
+									 {4, 0, 0, 0},
+									 {0, 0, 0, 0}};
+			NormalizeInfo info = normalize(grid);
+
+			Direction bestDirection = Direction::Up;
+			Direction normalizedDirection = Direction::Up;
+			Assert::AreEqual((int)bestDirection, (int)denormalizeDirection(normalizedDirection, info));
+		}
+
+		TEST_METHOD(DeNormalizeDirectionPlainTransposedTest)
+		{
+			TILE grid[SIZE][SIZE] = {{5, 3, 3, 1},
+									 {0, 0, 0, 0},
+									 {0, 0, 0, 0},
+									 {0, 0, 0, 0}};
+			NormalizeInfo info = normalize(grid);
+
+			Direction bestDirection = Direction::Left;
+			Direction normalizedDirection = Direction::Up;
+			Assert::AreEqual((int)bestDirection, (int)denormalizeDirection(normalizedDirection, info));
+		}
+
+		TEST_METHOD(DeNormalizeDirection90CCWTest)
+		{
+			TILE grid[SIZE][SIZE] = {{0, 4, 4, 5},
+									 {0, 0, 0, 1},
+									 {0, 0, 0, 0},
+									 {0, 0, 0, 0}};
+			NormalizeInfo info = normalize(grid);
+
+			Direction bestDirection = Direction::Right;
+			Direction normalizedDirection = Direction::Up;
+			Assert::AreEqual((int)bestDirection, (int)denormalizeDirection(normalizedDirection, info));
+		}
+
+		TEST_METHOD(DeNormalizeDirection90CCWTransposedTest)
+		{
+			TILE grid[SIZE][SIZE] = {{0, 0, 0, 5},
+									 {0, 0, 0, 4},
+									 {0, 0, 0, 4},
+									 {0, 0, 0, 0}};
+			NormalizeInfo info = normalize(grid);
+
+			Direction bestDirection = Direction::Up;
+			Direction normalizedDirection = Direction::Up;
+			Assert::AreEqual((int)bestDirection, (int)denormalizeDirection(normalizedDirection, info));
+		}
+
+		TEST_METHOD(DeNormalizeDirection180TransposedTest)
+		{
+			TILE grid[SIZE][SIZE] = {{0, 0, 0, 0},
+									 {0, 0, 0, 0},
+									 {0, 0, 0, 4},
+									 {1, 2, 3, 4}};
+			NormalizeInfo info = normalize(grid);
+
+			Direction bestDirection = Direction::Down;
+			Direction normalizedDirection = Direction::Left;
+			Assert::AreEqual((int)bestDirection, (int)denormalizeDirection(normalizedDirection, info));
+		}
+
+		TEST_METHOD(DeNormalizeDirection180Test)
+		{
+			TILE grid[SIZE][SIZE] = {{0, 0, 0, 2},
+									 {0, 0, 0, 3},
+									 {0, 0, 0, 4},
+									 {1, 2, 3, 4}};
+			NormalizeInfo info = normalize(grid);
+
+			Direction bestDirection = Direction::Down;
+			Direction normalizedDirection = Direction::Up;
+			Assert::AreEqual((int)bestDirection, (int)denormalizeDirection(normalizedDirection, info));
+		}
+
+		TEST_METHOD(DeNormalizeDirection90CWTest)
+		{
+			TILE grid[SIZE][SIZE] = {{0, 0, 0, 0},
+									 {0, 0, 0, 1},
+									 {0, 0, 0, 0},
+									 {5, 4, 4, 2}};
+			NormalizeInfo info = normalize(grid);
+
+			Direction bestDirection = Direction::Left;
+			Direction normalizedDirection = Direction::Up;
+			Assert::AreEqual((int)bestDirection, (int)denormalizeDirection(normalizedDirection, info));
+		}
+
+		TEST_METHOD(DeNormalizeDirection90CWTransposedTest)
+		{
+			TILE grid[SIZE][SIZE] = {{2, 0, 0, 0},
+									 {4, 0, 0, 0},
+									 {4, 0, 0, 0},
+									 {5, 0, 0, 0}};
+			NormalizeInfo info = normalize(grid);
+
+			Direction bestDirection = Direction::Down;
+			Direction normalizedDirection = Direction::Up;
+			Assert::AreEqual((int)bestDirection, (int)denormalizeDirection(normalizedDirection, info));
+		}
+
+
 
 	private:
 		template <typename T>
