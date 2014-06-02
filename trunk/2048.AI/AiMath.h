@@ -36,6 +36,8 @@ namespace AiMath2048
 
 	NormalizeInfo normalize(TILE grid[][SIZE]);
 	void denormalize(TILE grid[][SIZE], const NormalizeInfo normalizeInfo);
+
+	Direction denormalizeDirection(Direction originalDirection, const NormalizeInfo restoreInfo);
 }
 
 #endif

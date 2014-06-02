@@ -196,3 +196,29 @@ void AiMath2048::denormalize(TILE grid[][SIZE], const NormalizeInfo normalizeInf
 		break;
 	}
 }
+
+Direction AiMath2048::denormalizeDirection(Direction direction, const NormalizeInfo restoreInfo)
+{
+	// need to decode result
+	if (restoreInfo.transposed)
+	{
+		switch (direction)
+		{
+		case Up:
+			direction = Left;
+			break;
+		case Right:
+			direction = Down;
+			break;
+		case Down:
+			direction = Right;
+			break;
+		case Left:
+		default:
+			direction = Up;
+			break;
+		}
+	}
+
+	return (Direction)(((int)direction + (int)(restoreInfo.highestAngle)) % 4);
+}
