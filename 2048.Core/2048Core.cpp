@@ -116,7 +116,7 @@ namespace Core2048
 		}
 	}
 
-	int Move(TILE* const line)
+	unsigned int Move(TILE* const line)
 	{
 		if (IsEmpty(line))
 		{
@@ -146,7 +146,7 @@ namespace Core2048
 		return points;
 	}
 
-	int Move(TILE grid[][SIZE], const Direction direction)
+	unsigned int Move(TILE grid[][SIZE], const Direction direction)
 	{
 		int points = 0;
 		for (tilePtr i=0; i<SIZE; ++i)

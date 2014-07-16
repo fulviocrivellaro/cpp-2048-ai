@@ -30,6 +30,15 @@
     <ClInclude Include="CppDirection.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="IAIPLayer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GridWrapper.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CSMilGrid.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="2048.CppClassLib.cpp">
@@ -42,6 +51,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Cpp2048Native.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GridWrapper.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CSMilGrid.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

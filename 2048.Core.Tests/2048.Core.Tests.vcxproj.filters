@@ -24,6 +24,9 @@
     <ClInclude Include="TokenToString.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="TestUtils.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -39,6 +42,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="WriteTest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MilGridTest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

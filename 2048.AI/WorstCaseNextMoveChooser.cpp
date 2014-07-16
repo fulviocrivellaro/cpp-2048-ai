@@ -4,7 +4,7 @@
 #include "AiMath.h"
 
 using namespace Core2048;
-using namespace AiMath2048::Query;
+using namespace AiMath2048;
 
 WorstCaseNextMoveChooser::WorstCaseNextMoveChooser(const IGridScoreCalculator* const scoreCalculator)
 {
@@ -18,7 +18,7 @@ WorstCaseNextMoveChooser::~WorstCaseNextMoveChooser(void)
 Core2048::Direction WorstCaseNextMoveChooser::getNextMove(const TILE grid[SIZE][SIZE]) const
 {
 	Direction bestDirection;
-	AIScore bestResult = 0.0f;
+	AIScore bestResult = MIN_SCORE;
 
 	copyGrid(grid, mNormalizedGrid);
 	NormalizeInfo restoreInfo = normalize(mNormalizedGrid);
@@ -28,23 +28,20 @@ Core2048::Direction WorstCaseNextMoveChooser::getNextMove(const TILE grid[SIZE][
 	testScoreForDirection(mNormalizedGrid, Left, &bestResult, &bestDirection);
 	testScoreForDirection(mNormalizedGrid, Down, &bestResult, &bestDirection);
 
-	unsigned int ref = (unsigned int)bestDirection;
-	ref += restoreInfo.highestAngle;
-	ref = ref % 4;
-
-	return denormalizeDirection(bestDirection, restoreInfo);
+	auto res = denormalizeDirection(bestDirection, restoreInfo);
+	return res;
 }
 
-inline void WorstCaseNextMoveChooser::testScoreForDirection(TILE grid[SIZE][SIZE], const Direction direction, AIScore* const bestResult, Direction* const bestDirection) const
+inline void WorstCaseNextMoveChooser::testScoreForDirection(const TILE grid[SIZE][SIZE], const Direction direction, AIScore* const bestResult, Direction* const bestDirection) const
 {
 	if (!CanMove(grid, direction)) return;
 
 	// store original variable to local grid
 	copyGrid(grid, mSupportGrid);
 	// try up
-	Move(grid, direction);
+	Move(mSupportGrid, direction);
 
-	AIScore currentScore = getWorstScore(mNormalizedGrid);
+	AIScore currentScore = getWorstScore(mSupportGrid);
 	if (currentScore > *bestResult)
 	{
 		*bestDirection = direction;
@@ -52,9 +49,9 @@ inline void WorstCaseNextMoveChooser::testScoreForDirection(TILE grid[SIZE][SIZE
 	}
 }
 
-AIScore WorstCaseNextMoveChooser::getWorstScore(const TILE grid[SIZE][SIZE]) const
+AIScore WorstCaseNextMoveChooser::getWorstScore(TILE grid[SIZE][SIZE]) const
 {
-	AIScore worstScore = 1e36f;
+	AIScore worstScore = MAX_SCORE;
 	
 	for (tilePtr r = 0; r < SIZE; ++r)
 	{
@@ -63,17 +60,17 @@ AIScore WorstCaseNextMoveChooser::getWorstScore(const TILE grid[SIZE][SIZE]) con
 			if (grid[c][r] == 0)
 			{
 				// this can be modified
-				copyGrid(grid, mSupportGrid);
+				//copyGrid(grid, mSupportGrid);
 
 				// test 2
-				AIScore currentScore = testAnAddition(mSupportGrid, r, c, 1);
+				AIScore currentScore = testAnAddition(grid, r, c, 1);
 				if (currentScore < worstScore)
 				{
 					worstScore = currentScore;
 				}
 
 				// test 4
-				currentScore = testAnAddition(mSupportGrid, r, c, 1);
+				currentScore = testAnAddition(grid, r, c, 2);
 				if (currentScore < worstScore)
 				{
 					worstScore = currentScore;

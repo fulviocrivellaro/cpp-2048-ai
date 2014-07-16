@@ -21,7 +21,7 @@ bool Cpp2048Native::Stalled() const
 	return Core2048::Stalled(mGrid);
 }
 	
-int Cpp2048Native::Move(const CppDirection direction)
+unsigned int Cpp2048Native::Move(const CppDirection direction)
 {
 	return Core2048::Move(mGrid, (Direction)direction);
 }
