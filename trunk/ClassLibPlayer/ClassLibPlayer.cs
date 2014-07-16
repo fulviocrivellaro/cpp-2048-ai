@@ -14,12 +14,15 @@ namespace ClassLibPlayer
     {
         private const int SIZE = 4;
 
-        private int mPoints = 0;
+        private uint mPoints = 0;
 
         private Dictionary<char, CppDirection> mDirectionMap = new Dictionary<char, CppDirection>();
-        private Cpp2048ClassLib.Cpp2048 core = new Cpp2048ClassLib.Cpp2048();
+        private MilCore.CSMilGrid core = new MilCore.CSMilGrid();
 
         private int[,] valueGrid = new int[SIZE,SIZE];
+
+        private bool mAutoplayed = false;
+        private static readonly bool mShouldAutoplay = false;
 
         public ClassLibPlayer()
         {
@@ -32,17 +35,19 @@ namespace ClassLibPlayer
             mDirectionMap.Add('k', CppDirection.down);
             mDirectionMap.Add('j', CppDirection.left);
 
-            core.AddNewTile();
+            core.AddRandomTile();
             RefreshUI();
+
+            //AutoPlay();
         }
 
         private void RefreshUI()
         {
-            for (var col = 0; col < SIZE; ++col)
+            for (byte col = 0; col < SIZE; ++col)
             {
-                for (var row = 0; row < SIZE; ++row)
+                for (byte row = 0; row < SIZE; ++row)
                 {
-                    valueGrid[col, row] = core.GetValueForPosition(col, row);
+                    valueGrid[col, row] = core.GetValue(col, row);
                 }
             }
             grid.Grid = valueGrid;
@@ -52,16 +57,35 @@ namespace ClassLibPlayer
 
         private void GameUI_KeyPress(object sender, KeyPressEventArgs e)
         {
+            if (mShouldAutoplay && !mAutoplayed)
+            {
+                mAutoplayed = true;
+                //AutoPlay();
+                return;
+            }
+
             if (mDirectionMap.ContainsKey(e.KeyChar))
             {
                 var direction = mDirectionMap[e.KeyChar];
                 if (!core.CanMove(direction)) return;
 
                 mPoints += core.Move(direction);
-                core.AddNewTile();
+                core.AddRandomTile();
 
                 RefreshUI();
             }
         }
+
+        //private void AutoPlay()
+        //{
+        //    while (!core.IsStalled())
+        //    {
+        //        mPoints += core.AutoPlay();
+
+        //        core.AddRandomTile();
+        //        RefreshUI();
+        //        Application.DoEvents();
+        //    }
+        //}
     }
 }

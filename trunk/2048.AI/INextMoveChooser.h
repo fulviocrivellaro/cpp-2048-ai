@@ -8,14 +8,11 @@
 
 namespace AiMath2048
 {
-	namespace Query
+	class INextMoveChooser
 	{
-		class INextMoveChooser
-		{
-		public:
-			virtual ~INextMoveChooser() {}
-			virtual Core2048::Direction getNextMove(const Core2048::TILE grid[SIZE][SIZE]) const = 0;
-		};
-	}
+	public:
+		virtual ~INextMoveChooser() {}
+		virtual Core2048::Direction getNextMove(const Core2048::TILE grid[SIZE][SIZE]) const = 0;
+	};
 }
 #endif

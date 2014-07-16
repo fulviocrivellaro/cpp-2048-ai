@@ -3,22 +3,24 @@
 #ifndef __PRODUCT_GRID_SCORE_CALCULATOR__
 #define __PRODUCT_GRID_SCORE_CALCULATOR__
 
-#pragma once
 #include "IGridScoreCalculator.h"
 #include "AiMathQuery.h"
 
 using namespace AiMath2048::Query;
 
-class ProductGridScoreCalculator :
-	public IGridScoreCalculator
+namespace AiMath2048
 {
-public:
-	ProductGridScoreCalculator(const AISetup setup);
-	virtual ~ProductGridScoreCalculator(void);
-	virtual AIScore getScore(const Core2048::TILE grid[SIZE][SIZE]) const;
-	AISetup getSetup() const;
-private:
-	AISetup mSetup;
-};
+	class ProductGridScoreCalculator :
+		public IGridScoreCalculator
+	{
+	public:
+		ProductGridScoreCalculator(const AISetup setup);
+		virtual ~ProductGridScoreCalculator(void);
+		virtual AIScore getScore(const Core2048::TILE grid[SIZE][SIZE]) const;
+		AISetup getSetup() const;
+	private:
+		AISetup mSetup;
+	};
+}
 
 #endif

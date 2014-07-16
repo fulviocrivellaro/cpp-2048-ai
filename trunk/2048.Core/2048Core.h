@@ -1,5 +1,4 @@
-#ifndef __2048Core__
-#define __2048Core__
+#pragma once
 
 #include <math.h>
 
@@ -32,7 +31,7 @@ namespace Core2048
 	bool Stalled(const TILE grid[][SIZE]);
 
 	// try a move
-	int Move(TILE grid[][SIZE], const Direction direction);
+	unsigned int Move(TILE grid[][SIZE], const Direction direction);
 
 	// random
 	void AddNewTile(TILE grid[][SIZE]);
@@ -53,7 +52,5 @@ namespace Core2048
 
 	// move
 	void Squeeze(TILE* const line);
-	int Move(TILE* const line);
+	unsigned int Move(TILE* const line);
 }
-
-#endif

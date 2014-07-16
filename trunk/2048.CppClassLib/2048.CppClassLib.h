@@ -1,11 +1,13 @@
 // 2048.CppClassLib.h
 
-#pragma once
+#ifndef __CPP_2048__
+#define __CPP_2048__
 
 using namespace System;
 
 #include "Cpp2048Native.h"
 #include "2048Core.h"
+#include "INextMoveChooser.h"
 
 namespace Cpp2048ClassLib {
 
@@ -19,13 +21,18 @@ namespace Cpp2048ClassLib {
 	
 		bool Stalled();
 	
-		int Move(const CppDirection direction);
+		unsigned int Move(const CppDirection direction);
 	
 		void AddNewTile();
 
-		TILE GetValueForPosition(const int col, const int row);
+		TILE GetValueForPosition(const tilePtr col, const tilePtr row);
+
+		unsigned int AutoPlay();
 
 	private:
 		Cpp2048Native* mpNative;
+		AiMath2048::INextMoveChooser* mpNextMoveChooser;
 	};
 }
+
+#endif

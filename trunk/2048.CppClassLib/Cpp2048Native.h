@@ -17,7 +17,7 @@ public:
 	
 	bool Stalled() const;
 	
-	int Move(const CppDirection direction);
+	unsigned int Move(const CppDirection direction);
 	
 	void AddNewTile();
 
