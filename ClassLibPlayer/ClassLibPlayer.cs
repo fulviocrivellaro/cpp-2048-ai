@@ -12,21 +12,24 @@ namespace ClassLibPlayer
 {
     public partial class ClassLibPlayer : Form
     {
-        private const int SIZE = 4;
+        private static readonly int SIZE = MilCore.CSMilGrid.getSize();
 
         private uint mPoints = 0;
 
         private Dictionary<char, CppDirection> mDirectionMap = new Dictionary<char, CppDirection>();
         private MilCore.CSMilGrid core = new MilCore.CSMilGrid();
 
-        private int[,] valueGrid = new int[SIZE,SIZE];
+        private int[,] valueGrid;
 
         private bool mAutoplayed = false;
         private static readonly bool mShouldAutoplay = false;
 
         public ClassLibPlayer()
         {
+            valueGrid = new int[SIZE, SIZE];
+
             InitializeComponent();
+            grid.CodeInitialization(SIZE);
 
             grid.KeyPress += GameUI_KeyPress;
 

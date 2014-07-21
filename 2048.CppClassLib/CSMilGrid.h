@@ -21,6 +21,11 @@ namespace MilCore
 
 		TILE GetValue(const tilePtr col, const tilePtr row);
 
+		static const int getSize()
+		{
+			return SIZE;
+		}
+
 	private:
 		MilGrid* mGrid;
 	};

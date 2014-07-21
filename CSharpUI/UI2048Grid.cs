@@ -12,62 +12,10 @@ namespace CSharpUI
 {
     public partial class UI2048Grid: UserControl
     {
-        private const int size = 4;
-        private Label[,] tiles = new Label[size, size];
+        private int mSize = 4;
+        private Label[,] tiles = new Label[4, 4];
 
-        private Color[] mColors;
-
-        private Font darkFont;
-        private Font liteFont;
-
-        public int[,] Grid
-        {
-            set
-            {
-                for (var c = 0; c < size; ++c)
-                {
-                    for (var r = 0; r < size; ++r)
-                    {
-                        if (value[c, r] == 0)
-                        {
-                            tiles[c, r].Text = string.Empty;
-                        }
-                        else
-                        {
-                            tiles[c, r].Text = ((int)Math.Pow(2, value[c, r])).ToString();
-                        }
-
-                        tiles[c, r].BackColor = mColors[value[c, r]];
-                        tiles[c, r].ForeColor = value[c, r] > 2 ? Color.White : Color.Black;
-                    }
-                }
-            }
-        }
-
-        public UI2048Grid()
-        {
-            InitializeComponent();
-
-            // store labels
-            tiles[0, 0] = tile00;
-            tiles[0, 1] = tile01;
-            tiles[0, 2] = tile02;
-            tiles[0, 3] = tile03;
-            tiles[1, 0] = tile10;
-            tiles[1, 1] = tile11;
-            tiles[1, 2] = tile12;
-            tiles[1, 3] = tile13;
-            tiles[2, 0] = tile20;
-            tiles[2, 1] = tile21;
-            tiles[2, 2] = tile22;
-            tiles[2, 3] = tile23;
-            tiles[3, 0] = tile30;
-            tiles[3, 1] = tile31;
-            tiles[3, 2] = tile32;
-            tiles[3, 3] = tile33;
-
-            // and colors
-            mColors = new[]
+        private readonly Color[] mColors = new[]
             {
                 SystemColors.Control,   //     0
                 Color.LightGray,        //     2
@@ -85,6 +33,70 @@ namespace CSharpUI
                 Color.LimeGreen,        //  8192 ?
                 Color.Green,            // 16384 ?!?
             };
+
+        public int[,] Grid
+        {
+            set
+            {
+                RunOnTiles((c, r) =>
+                    {
+                        if (value[c, r] == 0)
+                        {
+                            tiles[c, r].Text = string.Empty;
+                        }
+                        else
+                        {
+                            tiles[c, r].Text = ((int)Math.Pow(2, value[c, r])).ToString();
+                        }
+
+                        tiles[c, r].BackColor = mColors[value[c, r]];
+                        tiles[c, r].ForeColor = value[c, r] > 2 ? Color.White : Color.Black;
+                    });
+            }
+        }
+
+        public UI2048Grid()
+        {
+            InitializeComponent();
+        }
+
+        public void CodeInitialization(int size)
+        {
+            mSize = size;
+            
+            this.SuspendLayout();
+
+            RunOnTiles((r, c) =>
+            {
+                this.tiles[r, c] = new System.Windows.Forms.Label();
+                var tile = tiles[r, c];
+
+                tile.BackColor = System.Drawing.SystemColors.ActiveCaption;
+                tile.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+                tile.Font = new System.Drawing.Font("Impact", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+                tile.Location = new System.Drawing.Point(3+c*70, 3+r*70);
+                tile.Margin = new System.Windows.Forms.Padding(3);
+                tile.Name = "tile00";
+                tile.Size = new System.Drawing.Size(64, 64);
+                tile.TabIndex = 1;
+                tile.Text = "4192";
+                tile.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+                
+                this.Controls.Add(tile);
+            });
+
+            this.ResumeLayout(false);
+        }
+
+        internal void RunOnTiles(Action<int, int> action)
+        {
+            for (var r = 0; r < mSize; ++r)
+            {
+                for (var c = 0; c < mSize; ++c)
+                {
+                    action(r, c);
+                }
+            }
         }
     }
 }
