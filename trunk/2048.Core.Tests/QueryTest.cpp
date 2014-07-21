@@ -1,6 +1,5 @@
 #include "stdafx.h"
 #include "CppUnitTest.h"
-#include "2048.Core.Tokenizer.h"
 #include "2048Core.h"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
@@ -167,19 +166,10 @@ namespace My2048CoreTests
 
 		void AssertCanMove(TILE grid[][SIZE], bool canMoveUp, bool canMoveDown, bool canMoveLeft, bool canMoveRight)
 		{
-			TOKEN tokn = Tokenizer::GetTokenFromStatus(grid);
-			
 			Assert::AreEqual(canMoveUp, CanMove(grid, Direction::Up));
-			Assert::AreEqual(canMoveUp, Tokenizer::CanMove(tokn, Direction::Up));
-			
 			Assert::AreEqual(canMoveDown, CanMove(grid, Direction::Down));
-			Assert::AreEqual(canMoveDown, Tokenizer::CanMove(tokn, Direction::Down));
-			
 			Assert::AreEqual(canMoveLeft, CanMove(grid, Direction::Left));
-			Assert::AreEqual(canMoveLeft, Tokenizer::CanMove(tokn, Direction::Left));
-			
 			Assert::AreEqual(canMoveRight, CanMove(grid, Direction::Right));
-			Assert::AreEqual(canMoveRight, Tokenizer::CanMove(tokn, Direction::Right));
 		}
 
 	};

@@ -21,18 +21,12 @@
     <ClInclude Include="targetver.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="TokenToString.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="TestUtils.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="TokenTest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="MoveTest.cpp">
