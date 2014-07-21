@@ -1,7 +1,6 @@
 #include "stdafx.h"
 #include "CppUnitTest.h"
 #include "2048Core.h"
-#include "2048.Core.Tokenizer.h"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
@@ -185,18 +184,11 @@ namespace My2048CoreTests
 									 {0, 0, 0,14},
 									 {0, 0, 0,14}};
 
-			TOKEN orig = Tokenizer::GetTokenFromStatus(grid);
-
 			TILE expc[SIZE][SIZE] = {{0, 0, 0, 0},
 								     {0, 0, 0, 0},
 									 {0, 0, 0, 0},
 									 {0, 0, 0,15}};
 			Move(grid, Direction::Down);
-			MatrixAreEqual(expc, grid, SIZE);
-
-			// token version
-			TOKEN moved = Tokenizer::Move(orig, Direction::Down);
-			Tokenizer::GetStatusFromToken(grid, moved);
 			MatrixAreEqual(expc, grid, SIZE);
 		}
 
