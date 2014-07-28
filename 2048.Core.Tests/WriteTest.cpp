@@ -1,108 +1,24 @@
 #include "stdafx.h"
 #include "CppUnitTest.h"
-#include "2048Core.h"
+#include "TestUtils.h"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 namespace My2048CoreTests
 {
-	using namespace Core2048;
+	using namespace MilCore;
 
 	TEST_CLASS(WriteTest)
 	{
 	public:
 
-		TEST_METHOD(WriteRightTest)
-		{
-			TILE grid[SIZE][SIZE];
-			ResetGrid(grid);
-			TILE line[SIZE];
-			TILE expected[SIZE] = {1, 2, 3, 0};
-			Direction direction = Direction::Right;
-
-			WriteLineInGrid(expected, grid, 2, direction);
-			GetLineFromGrid(line, grid, 2, direction);
-
-			ArrayAreEqual(expected, line, SIZE);
-
-			GetLineFromGrid(line, grid, 0, direction);
-			Assert::IsTrue(IsEmpty(line));
-			GetLineFromGrid(line, grid, 1, direction);
-			Assert::IsTrue(IsEmpty(line));
-			GetLineFromGrid(line, grid, 3, direction);
-			Assert::IsTrue(IsEmpty(line));
-		}
-
-		TEST_METHOD(WriteLeftTest)
-		{
-			TILE grid[SIZE][SIZE];
-			ResetGrid(grid);
-			TILE line[SIZE];
-			TILE expected[SIZE] = {1, 2, 3, 0};
-			Direction direction = Direction::Left;
-
-			WriteLineInGrid(expected, grid, 2, direction);
-			GetLineFromGrid(line, grid, 2, direction);
-
-			ArrayAreEqual(expected, line, SIZE);
-
-			GetLineFromGrid(line, grid, 0, direction);
-			Assert::IsTrue(IsEmpty(line));
-			GetLineFromGrid(line, grid, 1, direction);
-			Assert::IsTrue(IsEmpty(line));
-			GetLineFromGrid(line, grid, 3, direction);
-			Assert::IsTrue(IsEmpty(line));
-		}
-
-		TEST_METHOD(WriteUpTest)
-		{
-			TILE grid[SIZE][SIZE];
-			ResetGrid(grid);
-			TILE line[SIZE];
-			TILE expected[SIZE] = {1, 2, 3, 0};
-			Direction direction = Direction::Up;
-
-			WriteLineInGrid(expected, grid, 2, direction);
-			GetLineFromGrid(line, grid, 2, direction);
-
-			ArrayAreEqual(expected, line, SIZE);
-
-			GetLineFromGrid(line, grid, 0, direction);
-			Assert::IsTrue(IsEmpty(line));
-			GetLineFromGrid(line, grid, 1, direction);
-			Assert::IsTrue(IsEmpty(line));
-			GetLineFromGrid(line, grid, 3, direction);
-			Assert::IsTrue(IsEmpty(line));
-		}
-
-		TEST_METHOD(WriteDownTest)
-		{
-			TILE grid[SIZE][SIZE];
-			ResetGrid(grid);
-			TILE line[SIZE];
-			TILE expected[SIZE] = {1, 2, 3, 0};
-			Direction direction = Direction::Down;
-
-			WriteLineInGrid(expected, grid, 2, direction);
-			GetLineFromGrid(line, grid, 2, direction);
-
-			ArrayAreEqual(expected, line, SIZE);
-
-			GetLineFromGrid(line, grid, 0, direction);
-			Assert::IsTrue(IsEmpty(line));
-			GetLineFromGrid(line, grid, 1, direction);
-			Assert::IsTrue(IsEmpty(line));
-			GetLineFromGrid(line, grid, 3, direction);
-			Assert::IsTrue(IsEmpty(line));
-		}
-
 		TEST_METHOD(AddRandomTileTest)
 		{
-			TILE grid[SIZE][SIZE];
-			ResetGrid(grid);
+			auto grid = MilGridTests::getEmptyGrid();
+			
 			for (unsigned int i=1; i<=SIZE*SIZE; ++i)
 			{
-				AddNewTile(grid);
+				grid.addRandomTile();
 
 				unsigned int zeros = 0;
 				unsigned int gtzeros = 0;
@@ -125,17 +41,5 @@ namespace My2048CoreTests
 				Assert::AreEqual(SIZE*SIZE-i, zeros);
 			}
 		}
-
-	private:
-
-		template <typename T>
-		void ArrayAreEqual(T* expected, T* value, size_t size)
-		{
-			for (tilePtr i = 0; i < SIZE; ++i)
-			{
-				Assert::AreEqual(expected[i], value[i]);
-			}
-		}
-
 	};
 }
