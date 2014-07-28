@@ -13,6 +13,11 @@ namespace MilCore
 		delete(mGrid);
 	}
 
+	void CSMilGrid::Reset()
+	{
+		mGrid->resetGrid();
+	}
+
 	bool CSMilGrid::CanMove(const CppDirection direction)
 	{
 		return mGrid->canMove((Direction)direction);

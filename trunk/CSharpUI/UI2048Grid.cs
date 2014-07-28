@@ -12,8 +12,8 @@ namespace CSharpUI
 {
     public partial class UI2048Grid: UserControl
     {
-        private int mSize = 4;
-        private Label[,] tiles = new Label[4, 4];
+        private uint mSize;
+        private Label[,] tiles;
 
         private readonly Color[] mColors = new[]
             {
@@ -40,18 +40,21 @@ namespace CSharpUI
             {
                 RunOnTiles((c, r) =>
                     {
-                        if (value[c, r] == 0)
-                        {
-                            tiles[c, r].Text = string.Empty;
-                        }
-                        else
-                        {
-                            tiles[c, r].Text = ((int)Math.Pow(2, value[c, r])).ToString();
-                        }
-
-                        tiles[c, r].BackColor = mColors[value[c, r]];
-                        tiles[c, r].ForeColor = value[c, r] > 2 ? Color.White : Color.Black;
+                        this[c, r] = value[c, r];
                     });
+            }
+        }
+
+        public int this[uint c, uint r]
+        {
+            set
+            {
+                var tile = tiles[c, r];
+                tiles[c, r].Text = value > 0
+                    ? tiles[c, r].Text = ((int)Math.Pow(2, value)).ToString()
+                    : string.Empty;
+                tiles[c, r].BackColor = mColors[value];
+                tiles[c, r].ForeColor = value > 2 ? Color.White : Color.Black;
             }
         }
 
@@ -60,43 +63,62 @@ namespace CSharpUI
             InitializeComponent();
         }
 
-        public void CodeInitialization(int size)
+        public void CodeInitialization(uint size)
         {
             mSize = size;
+            tiles = new Label[mSize, mSize];
             
             this.SuspendLayout();
 
-            RunOnTiles((r, c) =>
+            RunOnTiles((c, r) =>
             {
-                this.tiles[r, c] = new System.Windows.Forms.Label();
-                var tile = tiles[r, c];
+                this.tiles[c, r] = new System.Windows.Forms.Label();
+                var tile = tiles[c, r];
 
                 tile.BackColor = System.Drawing.SystemColors.ActiveCaption;
                 tile.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
                 tile.Font = new System.Drawing.Font("Impact", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-                tile.Location = new System.Drawing.Point(3+c*70, 3+r*70);
                 tile.Margin = new System.Windows.Forms.Padding(3);
                 tile.Name = "tile00";
-                tile.Size = new System.Drawing.Size(64, 64);
                 tile.TabIndex = 1;
                 tile.Text = "4192";
                 tile.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
                 
                 this.Controls.Add(tile);
             });
+            UI2048Grid_Resize(this, null);
 
             this.ResumeLayout(false);
         }
 
-        internal void RunOnTiles(Action<int, int> action)
+        internal void RunOnTiles(Action<uint, uint> action)
         {
-            for (var r = 0; r < mSize; ++r)
+            for (uint c = 0; c < mSize; ++c)
             {
-                for (var c = 0; c < mSize; ++c)
+                for (uint r = 0; r < mSize; ++r)
                 {
-                    action(r, c);
+                    action(c, r);
                 }
             }
+        }
+
+        private const float TileToBorderRatio = 10.0f;
+        private void UI2048Grid_Resize(object sender, EventArgs e)
+        {
+            var itemsCount = ((mSize * TileToBorderRatio) + mSize + 1);
+            var wdtItem = (float)Size.Width / itemsCount;
+            var hgtItem = (float)Size.Height / itemsCount;
+            var tileWdt = TileToBorderRatio * wdtItem;
+            var tileHgt = TileToBorderRatio * hgtItem;
+            RunOnTiles((c, r) =>
+            {
+                var tile = tiles[c, r];
+
+                tile.Location = new System.Drawing.Point(
+                    (int)((1 + r) * wdtItem + r * tileWdt),
+                    (int)((1 + c) * hgtItem + c * tileHgt));
+                tile.Size = new System.Drawing.Size((int)tileWdt, (int)tileHgt);
+            });
         }
     }
 }
