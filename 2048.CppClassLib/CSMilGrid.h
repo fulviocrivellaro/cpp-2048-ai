@@ -11,6 +11,8 @@ namespace MilCore
 		CSMilGrid(void);
 		~CSMilGrid(void);
 
+		void Reset();
+
 		bool CanMove(const CppDirection direction);
 	
 		bool IsStalled();
@@ -21,7 +23,7 @@ namespace MilCore
 
 		TILE GetValue(const tilePtr col, const tilePtr row);
 
-		static const int getSize()
+		static const unsigned int getSize()
 		{
 			return SIZE;
 		}

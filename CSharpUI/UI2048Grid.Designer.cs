@@ -36,6 +36,7 @@
             this.BackColor = System.Drawing.SystemColors.ControlDark;
             this.Name = "UI2048Grid";
             this.Size = new System.Drawing.Size(280, 280);
+            this.Resize += new System.EventHandler(this.UI2048Grid_Resize);
             this.ResumeLayout(false);
 
         }

@@ -10,85 +10,92 @@ using System.Windows.Forms;
 
 namespace ClassLibPlayer
 {
-    public partial class ClassLibPlayer : Form
+    public enum Status
     {
-        private static readonly int SIZE = MilCore.CSMilGrid.getSize();
+        Stopped, Playing, Stalled
+    }
 
-        private uint mPoints = 0;
+    public partial class ClassLibPlayer : Form, IGameHolder
+    {
+        private static readonly uint SIZE = MilCore.CSMilGrid.getSize();
+        private IPlayer mPlayer;
 
-        private Dictionary<char, CppDirection> mDirectionMap = new Dictionary<char, CppDirection>();
-        private MilCore.CSMilGrid core = new MilCore.CSMilGrid();
-
-        private int[,] valueGrid;
-
-        private bool mAutoplayed = false;
-        private static readonly bool mShouldAutoplay = false;
+        private Status mStatus = Status.Stopped;
 
         public ClassLibPlayer()
         {
-            valueGrid = new int[SIZE, SIZE];
-
             InitializeComponent();
             grid.CodeInitialization(SIZE);
 
-            grid.KeyPress += GameUI_KeyPress;
+            mPlayer = new HumanPlayer(grid, this, SIZE);
 
-            mDirectionMap.Add('i', CppDirection.up);
-            mDirectionMap.Add('l', CppDirection.right);
-            mDirectionMap.Add('k', CppDirection.down);
-            mDirectionMap.Add('j', CppDirection.left);
-
-            core.AddRandomTile();
             RefreshUI();
-
-            //AutoPlay();
         }
 
         private void RefreshUI()
         {
-            for (byte col = 0; col < SIZE; ++col)
+            switch (mStatus)
             {
-                for (byte row = 0; row < SIZE; ++row)
-                {
-                    valueGrid[col, row] = core.GetValue(col, row);
-                }
+                case Status.Stopped:
+                    mBtnReset.Enabled = false;
+                    mBtnStart.Enabled = true;
+                    break;
+                case Status.Stalled:
+                    mBtnReset.Enabled = true;
+                    mBtnStart.Enabled = true;                    
+                    break;
+                //case Status.Running:
+                default:
+                    mBtnReset.Enabled = true;
+                    mBtnStart.Enabled = false;
+                    break;
             }
-            grid.Grid = valueGrid;
-
-            Text = string.Format("2048 - Pts: {0}", mPoints);
         }
 
-        private void GameUI_KeyPress(object sender, KeyPressEventArgs e)
+        private void mBtnStart_Click(object sender, EventArgs e)
         {
-            if (mShouldAutoplay && !mAutoplayed)
+            mPlayer.Start();
+            grid.Focus();
+            mStatus = Status.Playing;
+            RefreshUI();
+        }
+
+        private void mBtnReset_Click(object sender, EventArgs e)
+        {
+            mPlayer.Reset();
+            mStatus = Status.Stopped;
+            RefreshUI();
+        }
+
+        public void UpdatePoints(uint points)
+        {
+            switch (mStatus)
             {
-                mAutoplayed = true;
-                //AutoPlay();
-                return;
-            }
-
-            if (mDirectionMap.ContainsKey(e.KeyChar))
-            {
-                var direction = mDirectionMap[e.KeyChar];
-                if (!core.CanMove(direction)) return;
-
-                mPoints += core.Move(direction);
-                core.AddRandomTile();
-
-                RefreshUI();
+                case Status.Stopped:
+                    Text = "2048";
+                    break;
+                case Status.Stalled:
+                    Text = string.Format("2048 - Game over: {0}", points);
+                    break;
+                //case Status.Running:
+                default:
+                    Text = string.Format("2048 - Pts: {0}", points);
+                    break;
             }
         }
 
-        //private void AutoPlay()
-        //{
-        //    while (!core.IsStalled())
-        //    {
-        //        mPoints += core.AutoPlay();
+        public void Stalled()
+        {
+            mStatus = Status.Stalled;
+            RefreshUI();
+        }
 
-        //        core.AddRandomTile();
-        //        RefreshUI();
-        //        Application.DoEvents();
-        //    }
-        //}
+        public int this[uint c, uint r]
+        {
+            set
+            {
+                grid[c, r] = value;
+            }
+        }
     }
 }

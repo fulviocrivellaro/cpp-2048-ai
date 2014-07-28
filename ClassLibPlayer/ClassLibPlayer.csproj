@@ -50,6 +50,9 @@
     <Compile Include="ClassLibPlayer.Designer.cs">
       <DependentUpon>ClassLibPlayer.cs</DependentUpon>
     </Compile>
+    <Compile Include="HumanPlayer.cs" />
+    <Compile Include="IGameHolder.cs" />
+    <Compile Include="IPlayer.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="ClassLibPlayer.resx">
