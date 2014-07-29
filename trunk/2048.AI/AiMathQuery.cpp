@@ -1,10 +1,11 @@
 #include "stdafx.h"
 
 #include "AiMathQuery.h"
+#include "MilGrid.h"
 
-using namespace Core2048;
+using namespace MilCore;
 
-bool AiMath2048::Query::isHighestInTheCorner(const TILE grid[][SIZE])
+bool AiMath2048::Query::isHighestInTheCorner(const MilGrid& grid)
 {
 	TILE highest = grid[0][0];
 	for (tilePtr c = 0; c < SIZE; ++c)
@@ -17,11 +18,10 @@ bool AiMath2048::Query::isHighestInTheCorner(const TILE grid[][SIZE])
 			}
 		}
 	}
-
 	return true;
 }
 
-bool AiMath2048::Query::isMainColumnOrdered(const TILE grid[][SIZE])
+bool AiMath2048::Query::isMainColumnOrdered(const MilGrid& grid)
 {
 	for (tilePtr c = 1; c < SIZE; ++c)
 	{
@@ -30,11 +30,10 @@ bool AiMath2048::Query::isMainColumnOrdered(const TILE grid[][SIZE])
 			return false;
 		}
 	}
-
 	return true;
 }
 
-bool AiMath2048::Query::isMainColumnHighest(const TILE grid[][SIZE])
+bool AiMath2048::Query::isMainColumnHighest(const MilGrid& grid)
 {
 	int sums[SIZE];
 
@@ -58,14 +57,14 @@ bool AiMath2048::Query::isMainColumnHighest(const TILE grid[][SIZE])
 	return true;
 }
 
-bool AiMath2048::Query::forcedToUnwantedMove(const TILE grid[][SIZE])
+bool AiMath2048::Query::forcedToUnwantedMove(const MilGrid& grid)
 {
-	if (CanMove(grid, Direction::Left)) return false;
-	if (CanMove(grid, Direction::Up)) return false;
+	if (grid.canMove(Direction::Left)) return false;
+	if (grid.canMove(Direction::Up)) return false;
 	return true;
 }
 
-unsigned int AiMath2048::Query::countOrderedRows(const TILE grid[][SIZE])
+unsigned int AiMath2048::Query::countOrderedRows(const MilGrid& grid)
 {
 	int result = 0;
 	for (tilePtr c=0; c<SIZE; ++c)
@@ -84,12 +83,12 @@ unsigned int AiMath2048::Query::countOrderedRows(const TILE grid[][SIZE])
 	return result;
 }
 
-unsigned int AiMath2048::Query::availableMoves(const TILE grid[][SIZE])
+unsigned int AiMath2048::Query::availableMoves(const MilGrid& grid)
 {
 	int result = 0;
 	for (unsigned int i=0; i<4; ++i)
 	{
-		if (CanMove(grid, (Direction)i))
+		if (grid.canMove((Direction)i))
 		{
 			++result;
 		}
@@ -97,7 +96,7 @@ unsigned int AiMath2048::Query::availableMoves(const TILE grid[][SIZE])
 	return result;
 }
 
-unsigned int AiMath2048::Query::countEmptyTiles(const TILE grid[][SIZE])
+unsigned int AiMath2048::Query::countEmptyTiles(const MilGrid& grid)
 {
 	unsigned int count = 0;
 	for (tilePtr c=0; c<SIZE; ++c)

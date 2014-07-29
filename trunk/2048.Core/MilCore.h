@@ -1,5 +1,7 @@
 #pragma once
 
+#include <functional>
+
 namespace MilCore
 {
 	#define SIZE 4
@@ -16,4 +18,7 @@ namespace MilCore
 		Down = 2,
 		Left = 3,
 	};
+
+	void runOnTiles(std::function<void (tilePtr c, tilePtr r)> func);
+
 }

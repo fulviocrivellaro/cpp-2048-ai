@@ -11,3 +11,6 @@
 #include "CppUnitTest.h"
 
 // TODO: reference additional headers your program requires here
+#include "AiMath.h"
+#include "AiMathQuery.h"
+#include "TestUtils.h"

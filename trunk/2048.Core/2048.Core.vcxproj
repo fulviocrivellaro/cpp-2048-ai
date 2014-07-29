@@ -62,15 +62,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="2048Core.h" />
     <ClInclude Include="ConstTileLineIterator.h" />
     <ClInclude Include="MilCore.h" />
     <ClInclude Include="MilGrid.h" />
     <ClInclude Include="TileLineIterator.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="2048Core.cpp" />
     <ClCompile Include="ConstTileLineIterator.cpp" />
+    <ClCompile Include="MilCore.cpp" />
     <ClCompile Include="MilGrid.cpp" />
     <ClCompile Include="TileLineIterator.cpp" />
   </ItemGroup>

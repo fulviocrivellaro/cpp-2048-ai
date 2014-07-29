@@ -1,9 +1,11 @@
 #include "stdafx.h"
+
 #include "AiMath.h"
+#include "MilGrid.h"
 
 using namespace AiMath2048;
 
-Angles AiMath2048::highestAngle(TILE grid[][SIZE])
+Angles AiMath2048::highestAngle(MilGrid& grid)
 {
 	TILE maxs[4];
 	unsigned int sums[4];
@@ -14,7 +16,7 @@ Angles AiMath2048::highestAngle(TILE grid[][SIZE])
 	}
 
 	// compute max values and sums
-	for (unsigned char c=0; c<SIZE/2; ++c)
+	for (tilePtr c=0; c<SIZE/2; ++c)
 	{
 		for (unsigned char r=0; r<SIZE/2; ++r)
 		{
@@ -66,7 +68,7 @@ Angles AiMath2048::highestAngle(TILE grid[][SIZE])
 	return result;
 }
 
-bool AiMath2048::shouldTranspose(TILE grid[][SIZE])
+bool AiMath2048::shouldTranspose(MilGrid& grid)
 {
 	unsigned int sumCol = 0;
 	unsigned int sumRow = 0;
@@ -78,7 +80,7 @@ bool AiMath2048::shouldTranspose(TILE grid[][SIZE])
 	return sumRow > sumCol;
 }
 
-void AiMath2048::rotate90CW(TILE grid[][SIZE])
+void AiMath2048::rotate90CW(MilGrid& grid)
 {
 	for (tilePtr c=0; c<SIZE/2; ++c)
 	{
@@ -96,7 +98,7 @@ void AiMath2048::rotate90CW(TILE grid[][SIZE])
 	}
 }
 
-void AiMath2048::rotate90CCW(TILE grid[][SIZE])
+void AiMath2048::rotate90CCW(MilGrid& grid)
 {
 	for (tilePtr c=0; c<SIZE/2; ++c)
 	{
@@ -114,7 +116,7 @@ void AiMath2048::rotate90CCW(TILE grid[][SIZE])
 	}
 }
 
-void AiMath2048::rotate180(TILE grid[][SIZE])
+void AiMath2048::rotate180(MilGrid& grid)
 {
 #if SIZE % 2 != 0
 	// odd size
@@ -137,7 +139,7 @@ void AiMath2048::rotate180(TILE grid[][SIZE])
 #endif
 }
 
-void AiMath2048::transpose(TILE grid[][SIZE])
+void AiMath2048::transpose(MilGrid& grid)
 {
 	for (tilePtr c=1; c<SIZE; ++c)
 	{
@@ -150,7 +152,7 @@ void AiMath2048::transpose(TILE grid[][SIZE])
 	}
 }
 
-NormalizeInfo AiMath2048::normalize(TILE grid[][SIZE])
+NormalizeInfo AiMath2048::normalize(MilGrid& grid)
 {
 	NormalizeInfo result;
 	result.highestAngle = highestAngle(grid);
@@ -176,7 +178,7 @@ NormalizeInfo AiMath2048::normalize(TILE grid[][SIZE])
 	return result;
 }
 
-void AiMath2048::denormalize(TILE grid[][SIZE], const NormalizeInfo normalizeInfo)
+void AiMath2048::denormalize(MilGrid& grid, const NormalizeInfo normalizeInfo)
 {
 	if (normalizeInfo.transposed)
 	{

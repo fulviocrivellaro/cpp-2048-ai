@@ -1,10 +1,15 @@
 #include "stdafx.h"
 
-#ifndef __I_GRID_SCORE_CALCULATOR__
-#define __I_GRID_SCORE_CALCULATOR__
+#pragma once
 
-#include "2048Core.h"
+#include "MilCore.h"
 #include "AiMathQuery.h"
+#include "MilGrid.h"
+
+namespace MilCore
+{
+	class MilGrid;
+}
 
 namespace AiMath2048
 {
@@ -12,8 +17,7 @@ namespace AiMath2048
 	{
 	public:
 		virtual ~IGridScoreCalculator() {}
-		virtual AIScore getScore(const Core2048::TILE grid[SIZE][SIZE]) const = 0;
+		virtual AIScore getScore(const MilCore::MilGrid& grid) const = 0;
 		virtual AiMath2048::AISetup getSetup() const = 0;
 	};
 }
-#endif
