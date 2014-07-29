@@ -1,18 +1,19 @@
-#include "stdafx.h"
+#pragma once
 
-#ifndef __I_NEXT_MOVE_CHOOSER__
-#define __I_NEXT_MOVE_CHOOSER__
+#include "stdafx.h"
 
 #include "MilCore.h"
 #include "Analyzer.h"
 
-namespace AIMilGrid
+namespace MilCore
 {
-	class INextMoveChooser
+	namespace AI
 	{
-	public:
-		virtual ~INextMoveChooser() {}
-		virtual MilCore::Direction getNextMove(const MilCore::TILE grid[SIZE][SIZE]) const = 0;
-	};
+		class INextMoveChooser
+		{
+		public:
+			virtual ~INextMoveChooser() {}
+			virtual MilCore::Direction getNextMove(const MilCore::TILE grid[SIZE][SIZE]) const = 0;
+		};
+	}
 }
-#endif

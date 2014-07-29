@@ -14,3 +14,7 @@
 #include "AiMath.h"
 #include "Analyzer.h"
 #include "TestUtils.h"
+
+template<>
+static std::wstring Microsoft::VisualStudio::CppUnitTestFramework::ToString<>(const MilCore::AI::Angles& t) { RETURN_WIDE_STRING((int)t); }
+

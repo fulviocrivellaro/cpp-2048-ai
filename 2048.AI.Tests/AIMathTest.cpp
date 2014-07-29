@@ -2,13 +2,10 @@
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
-template<>
-static std::wstring Microsoft::VisualStudio::CppUnitTestFramework::ToString<>(const AIMilGrid::Angles& t) { RETURN_WIDE_STRING((int)t); }
-
 namespace My2048AITests
 {		
 	using namespace MilCore;
-	using namespace AIMilGrid;
+	using namespace MilCore::AI;
 	using namespace MilGridTests;
 
 	TEST_CLASS(AIMathTest)
