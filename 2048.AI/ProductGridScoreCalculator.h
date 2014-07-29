@@ -1,31 +1,27 @@
 #include "stdafx.h"
 
-#ifndef __PRODUCT_GRID_SCORE_CALCULATOR__
-#define __PRODUCT_GRID_SCORE_CALCULATOR__
+#pragma once
 
 #include "IGridScoreCalculator.h"
-#include "AiMathQuery.h"
+#include "Analyzer.h"
 
 namespace MilCore
 {
 	class MilGrid;
 }
 
-using namespace AiMath2048::Query;
-
-namespace AiMath2048
+namespace AIMilGrid
 {
 	class ProductGridScoreCalculator :
 		public IGridScoreCalculator
 	{
 	public:
-		ProductGridScoreCalculator(const AISetup setup);
+		ProductGridScoreCalculator(const MilGrid& grid, const AISetup setup);
 		virtual ~ProductGridScoreCalculator(void);
-		virtual AIScore getScore(const MilGrid& grid) const;
+		virtual AIScore getScore() const;
 		AISetup getSetup() const;
 	private:
+		const Analyzer mAnalyzer;
 		AISetup mSetup;
 	};
 }
-
-#endif

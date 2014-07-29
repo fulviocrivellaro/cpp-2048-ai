@@ -2,46 +2,46 @@
 #include "ProductGridScoreCalculator.h"
 #include "MilGrid.h"
 
-using namespace AiMath2048;
-
-ProductGridScoreCalculator::ProductGridScoreCalculator(const AISetup setup)
+namespace AIMilGrid
 {
-	mSetup = setup;
-}
-
-
-ProductGridScoreCalculator::~ProductGridScoreCalculator(void)
-{
-}
-
-AISetup ProductGridScoreCalculator::getSetup() const
-{
-	return mSetup;
-}
-
-AIScore ProductGridScoreCalculator::getScore(const MilGrid& grid) const
-{
-	AIScore result = BASE_SCORE;
-
-	if (isHighestInTheCorner(grid))
+	ProductGridScoreCalculator::ProductGridScoreCalculator(const MilGrid& grid, const AISetup setup)
+		: mAnalyzer(grid), mSetup(setup)
 	{
-		result *= mSetup.isHighestInTheCorner;
-	}
-	if (isMainColumnHighest(grid))
-	{
-		result *= mSetup.isMainColumnHighest;
-	}
-	if (isHighestInTheCorner(grid))
-	{
-		result *= mSetup.isMainColumnOrdered;
-	}
-	if (!forcedToUnwantedMove(grid))
-	{
-		result *= mSetup.forcedToUnwantedMove;
 	}
 
-	return result
-		  * mSetup.availableMoves * availableMoves(grid)
-		  * mSetup.countEmptyTiles * (countEmptyTiles(grid) + 1)
-		  * mSetup.countOrderedRows * (countOrderedRows(grid) + 1);
+	ProductGridScoreCalculator::~ProductGridScoreCalculator(void)
+	{
+	}
+
+	AISetup ProductGridScoreCalculator::getSetup() const
+	{
+		return mSetup;
+	}
+
+	AIScore ProductGridScoreCalculator::getScore() const
+	{
+		AIScore result = BASE_SCORE;
+
+		if (mAnalyzer.isHighestInTheCorner())
+		{
+			result *= mSetup.isHighestInTheCorner;
+		}
+		if (mAnalyzer.isMainColumnHighest())
+		{
+			result *= mSetup.isMainColumnHighest;
+		}
+		if (mAnalyzer.isHighestInTheCorner())
+		{
+			result *= mSetup.isMainColumnOrdered;
+		}
+		if (!mAnalyzer.forcedToUnwantedMove())
+		{
+			result *= mSetup.forcedToUnwantedMove;
+		}
+
+		return result
+			  * mSetup.availableMoves * mAnalyzer.availableMoves()
+			  * mSetup.countEmptyTiles * (mAnalyzer.countEmptyTiles() + 1)
+			  * mSetup.countOrderedRows * (mAnalyzer.countOrderedRows() + 1);
+	}
 }

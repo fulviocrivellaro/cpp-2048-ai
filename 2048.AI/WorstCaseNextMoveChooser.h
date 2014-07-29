@@ -4,7 +4,7 @@
 #include "INextMoveChooser.h"
 #include "MilGrid.h"
 
-namespace AiMath2048
+namespace AIMilGrid
 {
 	class IGridScoreCalculator;
 

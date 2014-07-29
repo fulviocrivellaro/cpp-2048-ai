@@ -4,9 +4,9 @@
 #define __I_NEXT_MOVE_CHOOSER__
 
 #include "MilCore.h"
-#include "AiMathQuery.h"
+#include "Analyzer.h"
 
-namespace AiMath2048
+namespace AIMilGrid
 {
 	class INextMoveChooser
 	{

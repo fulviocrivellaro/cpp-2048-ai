@@ -4,7 +4,7 @@
 #include "AiMath.h"
 
 using namespace MilCore;
-using namespace AiMath2048;
+using namespace AIMilGrid;
 
 WorstCaseNextMoveChooser::WorstCaseNextMoveChooser(const IGridScoreCalculator* const scoreCalculator)
 {

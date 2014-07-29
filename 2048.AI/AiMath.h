@@ -12,7 +12,7 @@ namespace MilCore
 
 using namespace MilCore;
 
-namespace AiMath2048
+namespace AIMilGrid
 {
 	enum Angles
 	{
@@ -27,8 +27,6 @@ namespace AiMath2048
 		Angles highestAngle;
 		bool transposed;
 	};
-
-#define PREFERRED_ANGLE Angles::TopLeft
 
 	Angles highestAngle(MilGrid& grid);
 	bool shouldTranspose(MilGrid& grid);
