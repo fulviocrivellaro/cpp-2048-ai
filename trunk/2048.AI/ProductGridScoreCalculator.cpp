@@ -2,46 +2,49 @@
 #include "ProductGridScoreCalculator.h"
 #include "MilGrid.h"
 
-namespace AIMilGrid
+namespace MilCore
 {
-	ProductGridScoreCalculator::ProductGridScoreCalculator(const MilGrid& grid, const AISetup setup)
-		: mAnalyzer(grid), mSetup(setup)
+	namespace AI
 	{
-	}
-
-	ProductGridScoreCalculator::~ProductGridScoreCalculator(void)
-	{
-	}
-
-	AISetup ProductGridScoreCalculator::getSetup() const
-	{
-		return mSetup;
-	}
-
-	AIScore ProductGridScoreCalculator::getScore() const
-	{
-		AIScore result = BASE_SCORE;
-
-		if (mAnalyzer.isHighestInTheCorner())
+		ProductGridScoreCalculator::ProductGridScoreCalculator(const MilGrid& grid, const AISetup setup)
+			: mAnalyzer(grid), mSetup(setup)
 		{
-			result *= mSetup.isHighestInTheCorner;
-		}
-		if (mAnalyzer.isMainColumnHighest())
-		{
-			result *= mSetup.isMainColumnHighest;
-		}
-		if (mAnalyzer.isHighestInTheCorner())
-		{
-			result *= mSetup.isMainColumnOrdered;
-		}
-		if (!mAnalyzer.forcedToUnwantedMove())
-		{
-			result *= mSetup.forcedToUnwantedMove;
 		}
 
-		return result
-			  * mSetup.availableMoves * mAnalyzer.availableMoves()
-			  * mSetup.countEmptyTiles * (mAnalyzer.countEmptyTiles() + 1)
-			  * mSetup.countOrderedRows * (mAnalyzer.countOrderedRows() + 1);
+		ProductGridScoreCalculator::~ProductGridScoreCalculator(void)
+		{
+		}
+
+		AISetup ProductGridScoreCalculator::getSetup() const
+		{
+			return mSetup;
+		}
+
+		AIScore ProductGridScoreCalculator::getScore() const
+		{
+			AIScore result = BASE_SCORE;
+
+			if (mAnalyzer.isHighestInTheCorner())
+			{
+				result *= mSetup.isHighestInTheCorner;
+			}
+			if (mAnalyzer.isMainColumnHighest())
+			{
+				result *= mSetup.isMainColumnHighest;
+			}
+			if (mAnalyzer.isHighestInTheCorner())
+			{
+				result *= mSetup.isMainColumnOrdered;
+			}
+			if (!mAnalyzer.forcedToUnwantedMove())
+			{
+				result *= mSetup.forcedToUnwantedMove;
+			}
+
+			return result
+				  * mSetup.availableMoves * mAnalyzer.availableMoves()
+				  * mSetup.countEmptyTiles * (mAnalyzer.countEmptyTiles() + 1)
+				  * mSetup.countOrderedRows * (mAnalyzer.countOrderedRows() + 1);
+		}
 	}
 }

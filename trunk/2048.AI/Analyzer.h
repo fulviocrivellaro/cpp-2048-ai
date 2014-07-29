@@ -9,42 +9,43 @@
 #define MIN_SCORE 0
 #define MAX_SCORE ULONG_MAX
 
-namespace AIMilGrid
+namespace MilCore
 {
-	struct AISetup
+	namespace AI
 	{
-		AIScore isHighestInTheCorner;
-		AIScore isMainColumnOrdered;
-		AIScore isMainColumnHighest;
-		AIScore forcedToUnwantedMove;
-		AIScore availableMoves;
-		AIScore countOrderedRows;
-		AIScore countEmptyTiles;
-	};
+		struct AISetup
+		{
+			AIScore isHighestInTheCorner;
+			AIScore isMainColumnOrdered;
+			AIScore isMainColumnHighest;
+			AIScore forcedToUnwantedMove;
+			AIScore availableMoves;
+			AIScore countOrderedRows;
+			AIScore countEmptyTiles;
+		};
 
-	using namespace MilCore;
-	
-	class Analyzer
-	{
-	public:
-		Analyzer(const MilGrid & milgrid);
-		~Analyzer() {}
+		class Analyzer
+		{
+		public:
+			Analyzer(const MilGrid & milgrid);
+			~Analyzer() {}
 
-		bool isHighestInTheCorner() const;
+			bool isHighestInTheCorner() const;
 		
-		bool isMainColumnOrdered() const;
+			bool isMainColumnOrdered() const;
 
-		bool isMainColumnHighest() const;
+			bool isMainColumnHighest() const;
 
-		bool forcedToUnwantedMove() const;
+			bool forcedToUnwantedMove() const;
 
-		unsigned int availableMoves() const;
+			unsigned int availableMoves() const;
 
-		unsigned int countOrderedRows() const;
+			unsigned int countOrderedRows() const;
 
-		unsigned int countEmptyTiles() const;
+			unsigned int countEmptyTiles() const;
 	
-	private:
-		const MilGrid& mGrid;
-	};
+		private:
+			const MilGrid& mGrid;
+		};
+	}
 }
