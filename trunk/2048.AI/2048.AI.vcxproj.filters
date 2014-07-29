@@ -27,9 +27,6 @@
     <ClInclude Include="AiMath.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="AiMathQuery.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="IGridScoreCalculator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -42,6 +39,9 @@
     <ClInclude Include="WorstCaseNextMoveChooser.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Analyzer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -50,13 +50,13 @@
     <ClCompile Include="AiMath.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="AiMathQuery.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="ProductGridScoreCalculator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="WorstCaseNextMoveChooser.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Analyzer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

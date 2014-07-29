@@ -12,5 +12,5 @@
 
 // TODO: reference additional headers your program requires here
 #include "AiMath.h"
-#include "AiMathQuery.h"
+#include "Analyzer.h"
 #include "TestUtils.h"
