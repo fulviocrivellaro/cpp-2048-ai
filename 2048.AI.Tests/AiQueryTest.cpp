@@ -1,8 +1,6 @@
-#include "stdafx.h"
-#include "CppUnitTest.h"
+#pragma once
 
-#include "AiMath.h"
-#include "AiMathQuery.h"
+#include "stdafx.h"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
@@ -11,9 +9,10 @@ static std::wstring Microsoft::VisualStudio::CppUnitTestFramework::ToString<>(co
 
 namespace My2048AITests
 {		
-	using namespace Core2048;
+	using namespace MilCore;
 	using namespace AiMath2048;
 	using namespace Query;
+	using namespace MilGridTests;
 
 	TEST_CLASS(AIQueryTest)
 	{
@@ -26,10 +25,11 @@ namespace My2048AITests
 									 {0, 2, 2, 0},
 									 {1, 5, 4, 4}};
 			
-			Assert::IsFalse(isHighestInTheCorner(grid));
+			auto milgrid = getFilledGrid(grid);
+			Assert::IsFalse(isHighestInTheCorner(milgrid));
 
-			grid[0][0] = 8;
-			Assert::IsTrue(isHighestInTheCorner(grid));
+			milgrid[0][0] = 8;
+			Assert::IsTrue(isHighestInTheCorner(milgrid));
 		}
 
 		TEST_METHOD(IsMainColumnOrderedTest)
@@ -38,11 +38,12 @@ namespace My2048AITests
 									 {7, 3, 2, 0},
 									 {6, 2, 2, 0},
 									 {5, 5, 4, 4}};
+			auto milgrid = getFilledGrid(grid);
 			
-			Assert::IsTrue(isMainColumnOrdered(grid));
+			Assert::IsTrue(isMainColumnOrdered(milgrid));
 			
-			grid[2][0] = 3;
-			Assert::IsFalse(isMainColumnOrdered(grid));
+			milgrid[2][0] = 3;
+			Assert::IsFalse(isMainColumnOrdered(milgrid));
 		}
 
 		TEST_METHOD(ForcedToUnwantedMoveTest)
@@ -51,14 +52,15 @@ namespace My2048AITests
 									 {7, 3, 2, 1},
 									 {6, 2, 3, 2},
 									 {5, 3, 4, 1}};
+			auto milgrid = getFilledGrid(grid);
 			
-			Assert::IsTrue(forcedToUnwantedMove(grid));
+			Assert::IsTrue(forcedToUnwantedMove(milgrid));
 			
-			grid[3][3] = 0;
-			Assert::IsTrue(forcedToUnwantedMove(grid));
+			milgrid[3][3] = 0;
+			Assert::IsTrue(forcedToUnwantedMove(milgrid));
 
-			grid[3][0] = 0;
-			Assert::IsFalse(forcedToUnwantedMove(grid));
+			milgrid[3][0] = 0;
+			Assert::IsFalse(forcedToUnwantedMove(milgrid));
 		}
 		
 		TEST_METHOD(AvailableMovesTest)
@@ -67,14 +69,15 @@ namespace My2048AITests
 									 {7, 3, 2, 3},
 									 {6, 2, 3, 1},
 									 {5, 3, 4, 3}};
+			auto milgrid = getFilledGrid(grid);
 			
-			AreEqual(0, availableMoves(grid));
+			AreEqual(0, availableMoves(milgrid));
 
-			grid[0][0] = 0;
-			AreEqual(2, availableMoves(grid));
+			milgrid[0][0] = 0;
+			AreEqual(2, availableMoves(milgrid));
 
-			grid[1][1] = 0;
-			AreEqual(4, availableMoves(grid));
+			milgrid[1][1] = 0;
+			AreEqual(4, availableMoves(milgrid));
 		}
 
 		TEST_METHOD(AsymmetricAvailableMovesTest)
@@ -83,14 +86,15 @@ namespace My2048AITests
 									 {0, 0, 0, 0},
 									 {0, 0, 0, 3},
 									 {0, 0, 4, 5}};
+			auto milgrid = getFilledGrid(grid);
 			
-			AreEqual(2, availableMoves(grid));
+			AreEqual(2, availableMoves(milgrid));
 
-			grid[1][3] = 3;
-			AreEqual(3, availableMoves(grid));
+			milgrid[1][3] = 3;
+			AreEqual(3, availableMoves(milgrid));
 
-			grid[3][0] = 1;
-			AreEqual(4, availableMoves(grid));
+			milgrid[3][0] = 1;
+			AreEqual(4, availableMoves(milgrid));
 		}
 
 		TEST_METHOD(IsMainColumnHighestTest)
@@ -99,14 +103,15 @@ namespace My2048AITests
 									 {7, 3, 2, 3},
 									 {6, 2, 3, 1},
 									 {5, 3, 4, 3}};
+			auto milgrid = getFilledGrid(grid);
 			
-			Assert::IsTrue(isMainColumnHighest(grid));
+			Assert::IsTrue(isMainColumnHighest(milgrid));
 
-			grid[0][2] = 8;
-			grid[1][2] = 8;
-			grid[2][2] = 8;
-			grid[3][2] = 8;
-			Assert::IsFalse(isMainColumnHighest(grid));
+			milgrid[0][2] = 8;
+			milgrid[1][2] = 8;
+			milgrid[2][2] = 8;
+			milgrid[3][2] = 8;
+			Assert::IsFalse(isMainColumnHighest(milgrid));
 		}
 
 		TEST_METHOD(CountOrderedRowsTest)
@@ -115,11 +120,12 @@ namespace My2048AITests
 									 {7, 3, 2, 1},
 									 {6, 5, 3, 1},
 									 {5, 3, 4, 3}};
+			auto milgrid = getFilledGrid(grid);
 			
-			AreEqual(2, countOrderedRows(grid));
+			AreEqual(2, countOrderedRows(milgrid));
 
-			grid[3][1] = 4;
-			AreEqual(3, countOrderedRows(grid));
+			milgrid[3][1] = 4;
+			AreEqual(3, countOrderedRows(milgrid));
 		}
 
 		TEST_METHOD(CountEmptyTilesTest)
@@ -128,11 +134,12 @@ namespace My2048AITests
 									 {7, 3, 0, 1},
 									 {6, 0, 3, 1},
 									 {5, 3, 0, 3}};
+			auto milgrid = getFilledGrid(grid);
 			
-			AreEqual(4, countEmptyTiles(grid));
+			AreEqual(4, countEmptyTiles(milgrid));
 
-			grid[3][1] = 0;
-			AreEqual(5, countEmptyTiles(grid));
+			milgrid[3][1] = 0;
+			AreEqual(5, countEmptyTiles(milgrid));
 		}
 
 	private:

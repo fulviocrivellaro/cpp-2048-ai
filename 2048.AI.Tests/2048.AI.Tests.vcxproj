@@ -84,6 +84,7 @@
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
+    <ClInclude Include="TestUtils.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AiQueryTest.cpp" />
@@ -92,6 +93,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="AIMathTest.cpp" />
+    <ClCompile Include="TestUtils.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\2048.AI\2048.AI.vcxproj">

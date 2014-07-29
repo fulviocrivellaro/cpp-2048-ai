@@ -1,12 +1,16 @@
 #include "stdafx.h"
 
-#ifndef __AI_MATH__
-#define __AI_MATH__
+#pragma once
 
-#include "2048Core.h"
+#include "MilCore.h"
 #include <algorithm>
 
-using namespace Core2048;
+namespace MilCore
+{
+	class MilGrid;
+}
+
+using namespace MilCore;
 
 namespace AiMath2048
 {
@@ -26,18 +30,16 @@ namespace AiMath2048
 
 #define PREFERRED_ANGLE Angles::TopLeft
 
-	Angles highestAngle(TILE grid[][SIZE]);
-	bool shouldTranspose(TILE grid[][SIZE]);
+	Angles highestAngle(MilGrid& grid);
+	bool shouldTranspose(MilGrid& grid);
 
-	void rotate90CW(TILE grid[][SIZE]);
-	void rotate90CCW(TILE grid[][SIZE]);
-	void rotate180(TILE grid[][SIZE]);
-	void transpose(TILE grid[][SIZE]);
+	void rotate90CW(MilGrid& grid);
+	void rotate90CCW(MilGrid& grid);
+	void rotate180(MilGrid& grid);
+	void transpose(MilGrid& grid);
 
-	NormalizeInfo normalize(TILE grid[][SIZE]);
-	void denormalize(TILE grid[][SIZE], const NormalizeInfo normalizeInfo);
+	NormalizeInfo normalize(MilGrid& grid);
+	void denormalize(MilGrid& grid, const NormalizeInfo normalizeInfo);
 
 	Direction denormalizeDirection(Direction originalDirection, const NormalizeInfo restoreInfo);
 }
-
-#endif

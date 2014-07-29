@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "ProductGridScoreCalculator.h"
+#include "MilGrid.h"
 
 using namespace AiMath2048;
 
@@ -18,7 +19,7 @@ AISetup ProductGridScoreCalculator::getSetup() const
 	return mSetup;
 }
 
-AIScore ProductGridScoreCalculator::getScore(const Core2048::TILE grid[][SIZE]) const
+AIScore ProductGridScoreCalculator::getScore(const MilGrid& grid) const
 {
 	AIScore result = BASE_SCORE;
 

@@ -78,20 +78,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="2048.CppClassLib.h" />
-    <ClInclude Include="Cpp2048Native.h" />
     <ClInclude Include="CppDirection.h" />
-    <ClInclude Include="GridWrapper.h" />
-    <ClInclude Include="IAIPLayer.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="CSMilGrid.h" />
     <ClInclude Include="Stdafx.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="2048.CppClassLib.cpp" />
     <ClCompile Include="AssemblyInfo.cpp" />
-    <ClCompile Include="Cpp2048Native.cpp" />
-    <ClCompile Include="GridWrapper.cpp" />
     <ClCompile Include="CSMilGrid.cpp" />
     <ClCompile Include="Stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

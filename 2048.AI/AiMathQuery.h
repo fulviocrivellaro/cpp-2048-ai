@@ -1,10 +1,8 @@
 #include "stdafx.h"
 
-#ifndef __AI_MATH__QUERY__
-#define __AI_MATH__QUERY__
+#pragma once
 
-#include <climits>
-#include "2048Core.h"
+#include "AiMath.h"
 
 #define AIScore unsigned int
 #define BASE_SCORE 1
@@ -26,22 +24,20 @@ namespace AiMath2048
 
 	namespace Query
 	{
-		using namespace Core2048;
+		using namespace MilCore;
 
-		bool isHighestInTheCorner(const TILE grid[][SIZE]);
+		bool isHighestInTheCorner(const MilGrid& grid);
 		
-		bool isMainColumnOrdered(const TILE grid[][SIZE]);
+		bool isMainColumnOrdered(const MilGrid& grid);
 
-		bool isMainColumnHighest(const TILE grid[][SIZE]);
+		bool isMainColumnHighest(const MilGrid& grid);
 
-		bool forcedToUnwantedMove(const TILE grid[][SIZE]);
+		bool forcedToUnwantedMove(const MilGrid& grid);
 
-		unsigned int availableMoves(const TILE grid[][SIZE]);
+		unsigned int availableMoves(const MilGrid& grid);
 
-		unsigned int countOrderedRows(const TILE grid[][SIZE]);
+		unsigned int countOrderedRows(const MilGrid& grid);
 
-		unsigned int countEmptyTiles(const TILE grid[][SIZE]);
+		unsigned int countEmptyTiles(const MilGrid& grid);
 	}
 }
-
-#endif

@@ -1,7 +1,4 @@
 #include "stdafx.h"
-#include "CppUnitTest.h"
-
-#include "AiMath.h"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
@@ -10,8 +7,9 @@ static std::wstring Microsoft::VisualStudio::CppUnitTestFramework::ToString<>(co
 
 namespace My2048AITests
 {		
-	using namespace Core2048;
+	using namespace MilCore;
 	using namespace AiMath2048;
+	using namespace MilGridTests;
 
 	TEST_CLASS(AIMathTest)
 	{
@@ -24,7 +22,7 @@ namespace My2048AITests
 									 {0, 2, 2, 0},
 									 {1, 5, 4, 4}};
 			
-			Angles res = highestAngle(grid);
+			Angles res = highestAngle(getFilledGrid(grid));
 			Assert::AreEqual((int)Angles::BottomLeft, (int)res);
 		}
 
@@ -35,7 +33,7 @@ namespace My2048AITests
 									 {0, 1, 2, 0},
 									 {1, 5, 4, 4}};
 			
-			Angles res = highestAngle(grid);
+			Angles res = highestAngle(getFilledGrid(grid));
 			Assert::AreEqual((int)Angles::TopRight, (int)res);
 		}
 
@@ -46,7 +44,7 @@ namespace My2048AITests
 									 {3, 5, 2, 0},
 									 {3, 5, 4, 4}};
 			
-			Angles res = highestAngle(grid);
+			Angles res = highestAngle(getFilledGrid(grid));
 			bool expectedTrue = res == Angles::TopRight || res == Angles::BottomLeft;
 			Assert::IsTrue(expectedTrue);
 		}
@@ -63,8 +61,9 @@ namespace My2048AITests
 									     {4, 2, 4, 3},
 									     {4, 0, 5, 4}};
 
-			rotate90CW(grid);
-			MatrixAreEqual(expected, grid, SIZE);
+			auto milgrid = getFilledGrid(grid);
+			rotate90CW(milgrid);
+			MatrixAreEqual(expected, milgrid, SIZE);
 		}
 
 		TEST_METHOD(Rotate90CCWTest)
@@ -79,8 +78,9 @@ namespace My2048AITests
 									     {2, 5, 5, 5},
 									     {1, 4, 3, 3}};
 
-			rotate90CCW(grid);
-			MatrixAreEqual(expected, grid, SIZE);
+			auto milgrid = getFilledGrid(grid);
+			rotate90CCW(milgrid);
+			MatrixAreEqual(expected, milgrid, SIZE);
 		}
 
 		TEST_METHOD(Rotate180Test)
@@ -95,8 +95,9 @@ namespace My2048AITests
 									     {5, 4, 5, 4},
 									     {4, 3, 2, 1}};
 
-			rotate180(grid);
-			MatrixAreEqual(expected, grid, SIZE);
+			auto milgrid = getFilledGrid(grid);
+			rotate180(milgrid);
+			MatrixAreEqual(expected, milgrid, SIZE);
 		}
 		
 		TEST_METHOD(TransposeTest)
@@ -111,8 +112,9 @@ namespace My2048AITests
 									     {3, 4, 2, 4},
 									     {4, 5, 0, 4}};
 
-			transpose(grid);
-			MatrixAreEqual(expected, grid, SIZE);
+			auto milgrid = getFilledGrid(grid);
+			transpose(milgrid);
+			MatrixAreEqual(expected, milgrid, SIZE);
 		}
 
 		TEST_METHOD(ShouldTransposeTest)
@@ -122,10 +124,11 @@ namespace My2048AITests
 									 {3, 5, 2, 0},
 									 {3, 5, 4, 4}};
 			
-			Assert::IsFalse(shouldTranspose(grid));
+			auto milgrid = getFilledGrid(grid);
+			Assert::IsFalse(shouldTranspose(milgrid));
 
-			transpose(grid);
-			Assert::IsTrue(shouldTranspose(grid));
+			transpose(milgrid);
+			Assert::IsTrue(shouldTranspose(milgrid));
 		}
 
 		TEST_METHOD(NormalizeTest)
@@ -135,13 +138,14 @@ namespace My2048AITests
 									 {3, 5, 2, 0},
 									 {3, 5, 4, 6}};
 			
-			NormalizeInfo res = normalize(grid);
+			auto milgrid = getFilledGrid(grid);
+			NormalizeInfo res = normalize(milgrid);
 
 			Assert::AreEqual(Angles::BottomRight, res.highestAngle);
 			Assert::IsTrue(res.transposed);
 			
 			// highest angle should now be TopLeft
-			Assert::AreEqual(Angles::TopLeft, highestAngle(grid));
+			Assert::AreEqual(Angles::TopLeft, highestAngle(milgrid));
 		}
 
 		TEST_METHOD(DeNormalize180Test)
@@ -150,19 +154,12 @@ namespace My2048AITests
 									 {4, 5, 4, 5},
 									 {3, 5, 2, 0},
 									 {3, 5, 4, 6}};
-			TILE copy[SIZE][SIZE];
-			for (tilePtr c = 0; c < SIZE; ++c)
-			{
-				for (tilePtr r = 0; r < SIZE; ++r)
-				{
-					copy[c][r] = grid[c][r];
-				}
-			}
+			auto milgrid = getFilledGrid(grid);
 			
-			NormalizeInfo info = normalize(grid);
-			denormalize(grid, info);
+			NormalizeInfo info = normalize(milgrid);
+			denormalize(milgrid, info);
 
-			MatrixAreEqual(copy, grid, SIZE);
+			MatrixAreEqual(grid, milgrid, SIZE);
 		}
 
 		TEST_METHOD(DeNormalize90Test)
@@ -171,19 +168,12 @@ namespace My2048AITests
 									 {4, 5, 4, 5},
 									 {3, 5, 2, 4},
 									 {3, 5, 4, 1}};
-			TILE copy[SIZE][SIZE];
-			for (tilePtr c = 0; c < SIZE; ++c)
-			{
-				for (tilePtr r = 0; r < SIZE; ++r)
-				{
-					copy[c][r] = grid[c][r];
-				}
-			}
+			auto milgrid = getFilledGrid(grid);
 			
-			NormalizeInfo info = normalize(grid);
-			denormalize(grid, info);
+			NormalizeInfo info = normalize(milgrid);
+			denormalize(milgrid, info);
 
-			MatrixAreEqual(copy, grid, SIZE);
+			MatrixAreEqual(grid, milgrid, SIZE);
 		}
 
 		TEST_METHOD(DeNormalizeDirectionPlainTest)
@@ -192,7 +182,9 @@ namespace My2048AITests
 									 {4, 0, 0, 1},
 									 {4, 0, 0, 0},
 									 {0, 0, 0, 0}};
-			NormalizeInfo info = normalize(grid);
+			
+			auto milgrid = getFilledGrid(grid);
+			NormalizeInfo info = normalize(milgrid);
 
 			Direction bestDirection = Direction::Up;
 			Direction normalizedDirection = Direction::Up;
@@ -205,7 +197,8 @@ namespace My2048AITests
 									 {0, 0, 0, 0},
 									 {0, 0, 0, 0},
 									 {0, 0, 0, 0}};
-			NormalizeInfo info = normalize(grid);
+			auto milgrid = getFilledGrid(grid);
+			NormalizeInfo info = normalize(milgrid);
 
 			Direction bestDirection = Direction::Left;
 			Direction normalizedDirection = Direction::Up;
@@ -218,7 +211,8 @@ namespace My2048AITests
 									 {0, 0, 0, 1},
 									 {0, 0, 0, 0},
 									 {0, 0, 0, 0}};
-			NormalizeInfo info = normalize(grid);
+			auto milgrid = getFilledGrid(grid);
+			NormalizeInfo info = normalize(milgrid);
 
 			Direction bestDirection = Direction::Right;
 			Direction normalizedDirection = Direction::Up;
@@ -231,7 +225,8 @@ namespace My2048AITests
 									 {0, 0, 0, 4},
 									 {0, 0, 0, 4},
 									 {0, 0, 0, 0}};
-			NormalizeInfo info = normalize(grid);
+			auto milgrid = getFilledGrid(grid);
+			NormalizeInfo info = normalize(milgrid);
 
 			Direction bestDirection = Direction::Up;
 			Direction normalizedDirection = Direction::Up;
@@ -244,7 +239,8 @@ namespace My2048AITests
 									 {0, 0, 0, 0},
 									 {0, 0, 0, 4},
 									 {1, 2, 3, 4}};
-			NormalizeInfo info = normalize(grid);
+			auto milgrid = getFilledGrid(grid);
+			NormalizeInfo info = normalize(milgrid);
 
 			Direction bestDirection = Direction::Down;
 			Direction normalizedDirection = Direction::Left;
@@ -257,7 +253,8 @@ namespace My2048AITests
 									 {0, 0, 0, 3},
 									 {0, 0, 0, 4},
 									 {1, 2, 3, 4}};
-			NormalizeInfo info = normalize(grid);
+			auto milgrid = getFilledGrid(grid);
+			NormalizeInfo info = normalize(milgrid);
 
 			Direction bestDirection = Direction::Down;
 			Direction normalizedDirection = Direction::Up;
@@ -270,7 +267,8 @@ namespace My2048AITests
 									 {0, 0, 0, 1},
 									 {0, 0, 0, 0},
 									 {5, 4, 4, 2}};
-			NormalizeInfo info = normalize(grid);
+			auto milgrid = getFilledGrid(grid);
+			NormalizeInfo info = normalize(milgrid);
 
 			Direction bestDirection = Direction::Left;
 			Direction normalizedDirection = Direction::Up;
@@ -283,7 +281,8 @@ namespace My2048AITests
 									 {4, 0, 0, 0},
 									 {4, 0, 0, 0},
 									 {5, 0, 0, 0}};
-			NormalizeInfo info = normalize(grid);
+			auto milgrid = getFilledGrid(grid);
+			NormalizeInfo info = normalize(milgrid);
 
 			Direction bestDirection = Direction::Down;
 			Direction normalizedDirection = Direction::Up;
@@ -294,13 +293,13 @@ namespace My2048AITests
 
 	private:
 		template <typename T>
-		void MatrixAreEqual(T expected[][SIZE], T value[][SIZE], size_t size)
+		void MatrixAreEqual(T expected[][SIZE], const MilGrid& milgrid, size_t size)
 		{
-			for (tilePtr c = 0; c < size; ++c)
+			for (tilePtr c = 0; c < SIZE; ++c)
 			{
-				for (tilePtr r = 0; r < size; ++r)
+				for (tilePtr r = 0; r < SIZE; ++r)
 				{
-					Assert::AreEqual(expected[c][r], value[c][r]);
+					Assert::AreEqual(expected[c][r], milgrid[c][r]);
 				}
 			}
 		}

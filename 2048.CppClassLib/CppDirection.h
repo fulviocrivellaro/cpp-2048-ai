@@ -1,12 +1,12 @@
 #pragma once
 
-#include "2048Core.h"
+#include "MilCore.h"
 
 public enum class CppDirection
 {
-	up = (int)Core2048::Direction::Up,
-	down = (int)Core2048::Direction::Down,
-	left = (int)Core2048::Direction::Left,
-	right = (int)Core2048::Direction::Right
+	up = (int)MilCore::Direction::Up,
+	down = (int)MilCore::Direction::Down,
+	left = (int)MilCore::Direction::Left,
+	right = (int)MilCore::Direction::Right
 };
 
