@@ -87,6 +87,7 @@
     <ClInclude Include="TestUtils.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="MilGridCopyTest.cpp" />
     <ClCompile Include="MilGridTest.cpp" />
     <ClCompile Include="QueryTest.cpp" />
     <ClCompile Include="stdafx.cpp">
