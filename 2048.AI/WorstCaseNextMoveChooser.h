@@ -17,11 +17,9 @@ namespace MilCore
 			virtual ~WorstCaseNextMoveChooser(void);
 			virtual Direction getNextMove(const MilGrid& grid) const;
 		private:
-			const IGridScoreCalculator* mScoreCalculator;
+			const IGridScoreCalculator* const mScoreCalculator;
 
-			void copyGrid(const MilGrid& sourceGrid, MilGrid& destGrid) const;
-			
-			AIScore getWorstScore(MilGrid& grid) const;
+			inline AIScore getWorstScore(MilGrid& grid) const;
 			inline void testScoreForDirection(const MilGrid& grid, const Direction direction, AIScore* const bestResult, Direction* const bestDirection) const;
 			inline AIScore testAnAddition(MilGrid& grid, const tilePtr r, const tilePtr c, const TILE value) const;
 		};
