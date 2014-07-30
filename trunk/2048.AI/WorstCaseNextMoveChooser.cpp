@@ -9,8 +9,8 @@ namespace MilCore
 	{
 
 		WorstCaseNextMoveChooser::WorstCaseNextMoveChooser(const IGridScoreCalculator* const scoreCalculator)
+			: mScoreCalculator(scoreCalculator)
 		{
-			mScoreCalculator = scoreCalculator;
 		}
 
 		WorstCaseNextMoveChooser::~WorstCaseNextMoveChooser(void)
@@ -40,7 +40,6 @@ namespace MilCore
 
 			// store original variable to local grid
 			auto supportGrid(grid);
-			copyGrid(grid, supportGrid);
 			// try up
 			supportGrid.move(direction);
 
@@ -52,7 +51,7 @@ namespace MilCore
 			}
 		}
 
-		AIScore WorstCaseNextMoveChooser::getWorstScore(MilGrid& grid) const
+		inline AIScore WorstCaseNextMoveChooser::getWorstScore(MilGrid& grid) const
 		{
 			AIScore worstScore = MAX_SCORE;
 	
@@ -92,17 +91,6 @@ namespace MilCore
 			AIScore currentScore = mScoreCalculator->getScore(grid);
 			grid[c][r] = orig;
 			return currentScore;
-		}
-
-		void WorstCaseNextMoveChooser::copyGrid(const MilGrid& sourceGrid, MilGrid& destGrid) const
-		{
-			for (tilePtr r = 0; r < SIZE; ++r)
-			{
-				for (tilePtr c = 0; c < SIZE; ++c)
-				{
-					destGrid[r][c] = sourceGrid[r][c];
-				}
-			}
 		}
 	}
 }
