@@ -22,13 +22,13 @@ namespace MilCore
 			Direction bestDirection;
 			AIScore bestResult = MIN_SCORE;
 
-			copyGrid(grid, mNormalizedGrid);
-			NormalizeInfo restoreInfo = normalize(mNormalizedGrid);
+			auto normalizedGrid(grid);
+			NormalizeInfo restoreInfo = normalize(normalizedGrid);
 
-			testScoreForDirection(mNormalizedGrid, Up, &bestResult, &bestDirection);
-			testScoreForDirection(mNormalizedGrid, Right, &bestResult, &bestDirection);
-			testScoreForDirection(mNormalizedGrid, Left, &bestResult, &bestDirection);
-			testScoreForDirection(mNormalizedGrid, Down, &bestResult, &bestDirection);
+			testScoreForDirection(normalizedGrid, Up, &bestResult, &bestDirection);
+			testScoreForDirection(normalizedGrid, Right, &bestResult, &bestDirection);
+			testScoreForDirection(normalizedGrid, Left, &bestResult, &bestDirection);
+			testScoreForDirection(normalizedGrid, Down, &bestResult, &bestDirection);
 
 			auto res = denormalizeDirection(bestDirection, restoreInfo);
 			return res;
@@ -39,11 +39,12 @@ namespace MilCore
 			if (!grid.canMove(direction)) return;
 
 			// store original variable to local grid
-			copyGrid(grid, mSupportGrid);
+			auto supportGrid(grid);
+			copyGrid(grid, supportGrid);
 			// try up
-			mSupportGrid.move(direction);
+			supportGrid.move(direction);
 
-			AIScore currentScore = getWorstScore(mSupportGrid);
+			AIScore currentScore = getWorstScore(supportGrid);
 			if (currentScore > *bestResult)
 			{
 				*bestDirection = direction;
