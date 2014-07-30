@@ -19,10 +19,6 @@ namespace MilCore
 		private:
 			const IGridScoreCalculator* mScoreCalculator;
 
-			// mutable internal support variables (for pre-allocation)
-			mutable MilGrid mNormalizedGrid;
-			mutable MilGrid mSupportGrid;
-
 			void copyGrid(const MilGrid& sourceGrid, MilGrid& destGrid) const;
 			
 			AIScore getWorstScore(MilGrid& grid) const;
