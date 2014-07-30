@@ -5,8 +5,6 @@
 
 namespace MilCore
 {
-	class MilCore;
-
 	namespace AI
 	{
 		class IGridScoreCalculator;
