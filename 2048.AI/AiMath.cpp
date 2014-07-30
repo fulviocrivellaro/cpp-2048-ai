@@ -7,7 +7,7 @@ namespace MilCore
 {
 	namespace AI
 	{
-		Angles highestAngle(MilGrid& grid)
+		Angles highestAngle(const MilGrid& grid)
 		{
 			TILE maxs[4];
 			unsigned int sums[4];
@@ -70,7 +70,7 @@ namespace MilCore
 			return result;
 		}
 
-		bool shouldTranspose(MilGrid& grid)
+		bool shouldTranspose(const MilGrid& grid)
 		{
 			unsigned int sumCol = 0;
 			unsigned int sumRow = 0;

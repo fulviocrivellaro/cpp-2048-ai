@@ -25,8 +25,8 @@ namespace MilCore
 			bool transposed;
 		};
 
-		Angles highestAngle(MilGrid& grid);
-		bool shouldTranspose(MilGrid& grid);
+		Angles highestAngle(const MilGrid& grid);
+		bool shouldTranspose(const MilGrid& grid);
 
 		void rotate90CW(MilGrid& grid);
 		void rotate90CCW(MilGrid& grid);
