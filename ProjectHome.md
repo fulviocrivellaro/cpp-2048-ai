@@ -1,0 +1,1 @@
+2048 game, self-learning algorithm and derived AI player
